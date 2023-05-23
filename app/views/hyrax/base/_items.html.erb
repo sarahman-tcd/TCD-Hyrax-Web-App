@@ -8,8 +8,12 @@
         <th><%= t('.thumbnail') %></th>
         <th><%= t('.title') %></th>
         <th><%= t('.identifier') %></th>
-        <th><%= t('.visibility') %></th>
-        <th><%= t('.actions') %></th>
+        <% if user_signed_in? %>
+          <th><%= t('.visibility') %></th>
+        <% end %>  
+   
+        <th class="actions-column-th"><%= t('.actions') %></th>
+              
       </tr>
     </thead>
     <tbody>

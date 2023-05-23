@@ -1,0 +1,12 @@
+<% presenter.title.each_with_index do |title, index| %>
+    <% if index == 0 %>
+        <h1 class="ensure-wrapped">
+            <%= title %>
+            <% if user_signed_in? %>
+             <%= presenter.permission_badge %>
+            <% end %>
+        </h1>
+    <% else %>
+        <h1 class="ensure-wrapped"><%= title %></h1>
+    <% end %>
+<% end %>

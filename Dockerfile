@@ -1,17 +1,13 @@
-FROM registry.gitlab.com/notch8/dev-ops/samvera:latest
+FROM ruby:2.7.4
 
-COPY ops/nginx.sh /etc/service/nginx/run
-COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-COPY ops/env.conf /etc/nginx/main.d/env.conf
+RUN apt-get update && apt-get install -y build-essential libpq-dev nodejs
 
 RUN gem install bundler -v 2.1.4
-COPY --chown=app:app Gemfile* $APP_HOME/
-RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
 
-COPY --chown=app:app . $APP_HOME
-RUN /sbin/setuser app bash -l -c " \
-    cd /home/app/webapp && \
-    DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
-    mv ./public/assets ./public/assets-new"
+WORKDIR /app
+COPY Gemfile Gemfile.lock /app/
+RUN bundle install --jobs 4 --retry 3
 
-CMD ["/sbin/my_init"]
+COPY . /app
+
+CMD ["rails", "server", "-b", "0.0.0.0"]

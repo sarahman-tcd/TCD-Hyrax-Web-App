@@ -41,3 +41,31 @@
     </div>
   </div>
 </div>
+
+
+<script>
+$(document).ready(function() {
+  var actionHeaders = $('.actions-column-th').filter('th');
+  var actionCells = $('.actions-column').filter('td');
+  
+  var emptyCellCount = 0;
+
+  actionCells.each(function() {
+    if ($(this).html().trim() === '') {
+      emptyCellCount++;
+    }
+  });
+
+  if (emptyCellCount === actionCells.length)
+  {    
+    actionHeaders.hide();
+    actionCells.hide();
+  }
+  else{
+    actionHeaders.show();
+    actionCells.show();
+  }
+ 
+});
+</script>
+

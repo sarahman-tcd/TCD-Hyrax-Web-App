@@ -9,12 +9,16 @@
   end
   %>
 
-
   <td class="attribute attribute-filename"><%= link_to(member.link_name, contextual_path(member, @presenter)) %></td>
   <td class="attribute attribute-identifier"><%=  (member.class.name == "Hyrax::FileSetPresenter")? blank_to_nbsp(member.parent.try(:identifier)) : blank_to_nbsp(member.try(:identifier)) %></td>
 
-  <td class="attribute attribute-permission"><%= member.permission_badge %></td>
-  <td>
-    <%= render 'actions', member: member %>
-  </td>
+  <% if user_signed_in? %>
+    <td class="attribute attribute-permission"><%= member.permission_badge %></td>
+  <% end %> 
+
+
+  <td class="actions-column">   
+    <%= render 'actions', member: member %>   
+  </td> 
+  
 </tr>

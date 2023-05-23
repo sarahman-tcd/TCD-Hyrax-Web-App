@@ -14,18 +14,23 @@ services:
 
   # try https://www.gitmemory.com/issue/phusion/passenger/2211/505533958
   web:
+    build: .
+    ports:
+    - "3000:3000"
     extends: app
     command: bundle exec rails s puma -b 0.0.0.0 -p 3000
-    environment:
-      VIRTUAL_HOST: trinity.docker
-      VIRTUAL_PORT: 3000
+  #  environment:
+      # VIRTUAL_HOST: trinity.docker
+
+      #HOST: localhost
+
     depends_on:
       - redis
       - solr
       - fcrepo
       - mysql
       - workers
-  
+
   workers:
     extends: app
     command: bundle exec sidekiq
